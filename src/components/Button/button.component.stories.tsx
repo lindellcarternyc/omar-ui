@@ -34,3 +34,7 @@ export const RedButton = createButtonStory({
 export const DarkBlueButton = createButtonStory({
   color: 'darkblue'
 })
+
+export const GreenButton = createButtonStory({
+  color: 'green'
+})

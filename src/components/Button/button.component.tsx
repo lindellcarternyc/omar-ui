@@ -55,12 +55,13 @@ export interface ButtonProps {
   color?: Colors.ColorKey
 }
 
-const ShadeMap: {[K in Colors.ColorKey]: Colors.Shade } = {
+const ShadeMap: Readonly<{[K in Colors.ColorKey]: Colors.Shade }> = {
   gray: Colors.GrayShade,
   blue: Colors.MediumBlueShade,
   yellow: Colors.YellowShade,
   red: Colors.RedShade,
-  darkblue: Colors.DarkBlueShade
+  darkblue: Colors.DarkBlueShade,
+  green: Colors.GreenShade
 }
 
 const backgroundFromColorName = (colorName: Colors.ColorKey): ButtonColor => {

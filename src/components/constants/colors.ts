@@ -19,7 +19,8 @@ const ColorName = {
   blue: 'blue',
   yellow: 'yellow',
   red: 'red',
-  darkblue: 'darkblue'
+  darkblue: 'darkblue',
+  green: 'green'
 } as const
 
 export type ColorKey = keyof typeof ColorName
@@ -64,4 +65,10 @@ export const DarkBlueShade: Shade = {
   light: '#0e7395',
   medium: DarkBlue,
   dark: '#052b38'
+}
+
+export const GreenShade: Shade = {
+  light: '#10f9bb',
+  medium: Green,
+  dark: '#049f76'
 }
