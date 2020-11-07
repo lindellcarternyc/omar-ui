@@ -13,18 +13,6 @@ export interface Shade {
   dark: string
 }
 
-const ColorName = {
-  // 'gray' | 'blue' | 'yellow'
-  gray: 'gray',
-  blue: 'blue',
-  yellow: 'yellow',
-  red: 'red',
-  darkblue: 'darkblue',
-  green: 'green'
-} as const
-
-export type ColorKey = keyof typeof ColorName
-
 export const GrayShade: Shade = {
   light: '#cccccc',
   medium: MediumGray,
@@ -71,4 +59,25 @@ export const GreenShade: Shade = {
   light: '#10f9bb',
   medium: Green,
   dark: '#049f76'
+}
+
+const ColorName = {
+  // 'gray' | 'blue' | 'yellow'
+  gray: 'gray',
+  blue: 'blue',
+  yellow: 'yellow',
+  red: 'red',
+  darkblue: 'darkblue',
+  green: 'green',
+} as const
+
+export type ColorKey = keyof typeof ColorName
+
+export const ShadeMap: Readonly<{ [K in ColorKey]: Shade }> = {
+  gray: GrayShade,
+  blue: MediumBlueShade,
+  yellow: YellowShade,
+  red: RedShade,
+  darkblue: DarkBlueShade,
+  green: GreenShade
 }

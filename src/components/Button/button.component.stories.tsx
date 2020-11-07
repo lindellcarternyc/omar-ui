@@ -38,3 +38,12 @@ export const DarkBlueButton = createButtonStory({
 export const GreenButton = createButtonStory({
   color: 'green'
 })
+
+export const DefaultOutlineButton = createButtonStory({
+  variant: 'outline'
+})
+
+export const BlueOutlineButton = createButtonStory({
+  variant: 'outline',
+  color: 'blue'
+})

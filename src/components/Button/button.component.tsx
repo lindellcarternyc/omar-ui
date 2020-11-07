@@ -1,30 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 import * as Colors from '../constants/colors'
+import * as ButtonColorUtils from './button.color.utils'
 
-interface ButtonColor {
+export interface ButtonColor {
   default: string
   accent: string
   disabled: string
-}
-
-const shadeToButtonColor = (shade: Colors.Shade): ButtonColor => {
-  return {
-    default: shade.medium,
-    accent: shade.light,
-    disabled: shade.dark
-  }
 }
 
 interface StyledButtonProps {
   disabled?: boolean
   backgroundColor: ButtonColor
   textColor: ButtonColor
+  borderColor: ButtonColor
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
+  border: 1px solid transparent;
+
+  border-color: ${({ borderColor }) => {
+    return borderColor.default
+  }};
 
   cursor: pointer;
 
@@ -45,48 +44,50 @@ const StyledButton = styled.button<StyledButtonProps>`
       if (disabled) return backgroundColor.disabled
       return backgroundColor.accent
     }};
+
+    color: ${({ textColor }) => {
+      return textColor.accent
+    }};
+
+    border-color: ${({ borderColor }) => {
+      return borderColor.accent
+    }};
   }
 `
+export type ButtonVariant
+  = 'default'
+  | 'outline'
 
 export interface ButtonProps {
   text?: string
   children?: string
   disabled?: boolean
   color?: Colors.ColorKey
+  variant?: ButtonVariant
 }
 
-const ShadeMap: Readonly<{[K in Colors.ColorKey]: Colors.Shade }> = {
-  gray: Colors.GrayShade,
-  blue: Colors.MediumBlueShade,
-  yellow: Colors.YellowShade,
-  red: Colors.RedShade,
-  darkblue: Colors.DarkBlueShade,
-  green: Colors.GreenShade
-}
+export const Button: React.FC<ButtonProps> = ({ text, children, disabled, color, variant }) => {
+  const colorName: Colors.ColorKey = color || 'gray'
+  const buttonVariant: ButtonVariant = variant || 'default'
 
-const backgroundFromColorName = (colorName: Colors.ColorKey): ButtonColor => {
-  return shadeToButtonColor(ShadeMap[colorName])
-}
-
-const textColorFromColorName = (colorName: Colors.ColorKey): ButtonColor => {
-  switch (colorName) {
-    case 'gray': {
-      return shadeToButtonColor(Colors.BlackShade)
-    }
-    default: {
-      return shadeToButtonColor(Colors.WhiteShade)
-    }
-  }
-}
-
-export const Button: React.FC<ButtonProps> = ({ text, children, disabled, color }) => {
-  const backgroundColor = backgroundFromColorName(color || 'gray')
-  const textColor = textColorFromColorName(color || 'gray')
+  const backgroundColor = ButtonColorUtils.backgroundColor({
+    colorName,
+    variant: buttonVariant
+  })
+  const textColor = ButtonColorUtils.textColor({
+    colorName,
+    variant: buttonVariant
+  })
+  const borderColor = ButtonColorUtils.borderColor({
+    colorName,
+    variant: buttonVariant
+  })
 
   return (
     <StyledButton 
       backgroundColor={backgroundColor}
       textColor={textColor}
+      borderColor={borderColor}
       disabled={disabled}
     >
       {text || children || 'button'}
